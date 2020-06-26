@@ -1,0 +1,27 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha256-bQmrZe4yPnQrLTY+1gYylfNMBuGfnT/HKsCGX+9Xuqo=" crossorigin="anonymous"></script>
+					  <script>
+						  jQuery(document).ready(function($) {
+						  var socket = io.connect('wss://www.openlove.me:8080', { 'forceNew': true, query: 'id=<?php echo $usuario;?>' });
+						  localStorage.setItem("noleidas", 0);
+						  socket.on('messages', function(data) {
+							  console.log(data);
+							  var items = [];
+							  $.each( data, function( key, val ) {
+								  //items.push( "<li id='" + key + "'>" + val + "</li>" );
+							  });
+							  var num = $( data['noleidas'] ).length;
+
+							  if (num != 0) {
+								  $(".mzg").addClass("bell");
+							  } else {
+								  $(".mzg").removeClass("bell");
+							  }
+
+
+							  localStorage.setItem("noleidas", num);
+							  $("#bd1").html(localStorage.getItem("noleidas"));
+						  });
+						  });
+					  </script>
